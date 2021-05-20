@@ -1,0 +1,92 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" >
+    <div class="row">
+      <div class="col">  
+        <!-- <label for="Book">Book</label> -->
+        <select class="form-control"  (change)="onChangeEvent(form)"  name="Book" ngModel #Book="ngModel" [ngModel]="0">  
+            <!-- <option value="-1">Book</option>         -->
+            <option *ngFor="let book of books; let i = index" value={{i}}>
+              {{book}}
+            </option>
+          </select>
+
+          <!-- <datalist id="Book" name="Book" >
+            <option *ngFor="let book of books; let i = index" value={{i}}>
+                {{book}}
+              </option>
+          </datalist> -->
+          
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" placeholder="Chapter" (change)="onChangeEvent(form)"  name="Chapter" min="1" max="66" [ngModel]="1" ngModel #Chapter="ngModel">
+      </div>
+      <!-- <div class="col">
+        <input type="number" class="form-control" placeholder="Verses"  (change)="onChangeEvent(form)"  name="Verses" min="1" max="200" [ngModel]="1" ngModel #Verses="ngModel">
+      </div> -->
+     
+   
+    </div>
+    <br/>    
+         
+  </form>
+
+  <div class="row">
+    <div class="col-12">
+      <button class="btn btn-outline-primary btn-block" (click)="onPlayer()" ><i class="fa fa-play"></i> {{playerStatus}} {{books[book-1]}} : {{chapter}}</button>
+    </div>
+  </div>  
+
+<br>
+
+<div class="" *ngIf="resData">  
+  <!-- <ol class="list-group list-group-flush">
+    <li *ngFor="let verse of resData.Verse;let i = index"  class="list-group-item">
+      <div
+       style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size: large;">               
+      <b>{{i+1}} : </b>{{verse.Verse}}
+      </div>   
+    </li>
+  </ol> -->  
+  <!-- <i class="fa fa-book fa-5x"></i>
+  <i class="fa fa-search"></i> -->
+  <div class="list-group">
+    <button type="button" class="list-group-item list-group-item-action active" 
+    popover="I will hide on blur"
+    triggers="mouseenter:mouseleave"
+    >
+      <i class="fa fa-book"></i> {{books[book-1]}} : {{chapter}} 
+    </button>
+    <button type="button" class="list-group-item list-group-item-action" (click)="onVerse(form,i)" *ngFor="let verse of resData.Verse;let i = index">
+       <b>{{i+1}} : </b>{{verse.Verse}}      
+    </button>    
+  </div>
+</div>
+<br/>
+
+
+<ng-template #newListModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">New List</h4>
+    <button type="button" class="close float-right" aria-label="Close" (click)="newListCancelled()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" placeholder="List title..." [(ngModel)]="newListEditor.title"
+        [ngClass]="{ 'is-invalid': newListEditor.error }" (keyup.enter)="addList()" />
+      <div *ngIf="newListEditor.error" class="invalid-feedback">
+        {{ newListEditor.error }}
+      </div>
+    </div>
+    <div *ngIf="debug">
+      <pre>{{ newListEditor | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-default" (click)="newListCancelled()">Cancel</button>
+      <button class="btn btn-primary" (click)="addList()">Create</button>
+    </div>
+  </div>
+</ng-template>

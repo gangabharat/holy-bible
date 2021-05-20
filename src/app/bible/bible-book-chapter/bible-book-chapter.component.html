@@ -1,0 +1,26 @@
+<!-- <div class="" *ngFor="let verse of resData">    
+    <div class="alert alert-primary"
+    style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size: large;">               
+    {{verse | json}}
+    </div>
+</div>   -->
+
+<!-- <button (click)="addNew()" class="btn btn-primary">Add</button> -->
+
+<!-- <div class="">    
+    <div class="alert alert-primary"
+    style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size: large;">               
+    {{resData | json}}
+    </div>
+</div> -->
+
+<div class="" *ngIf="resData">  
+      <div class="list-group">
+      <button type="button" class="list-group-item list-group-item-action active">
+        {{books[bibleBook-1]}} : {{bibleChapters}} 
+      </button>
+      <button type="button" class="list-group-item list-group-item-action" (click)="onVerse(form,i)" *ngFor="let verse of resData.Verse;let i = index">
+        <b>{{i+1}} : </b>{{verse.Verse}}      
+      </button>    
+    </div>
+  </div>
