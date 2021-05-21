@@ -2,13 +2,83 @@
     <div class="row">
       <div class="col">  
         <!-- <label for="Book">Book</label> -->
-        <select class="form-control"  (change)="onChangeEvent(form)"  name="Book" ngModel #Book="ngModel" [ngModel]="0">  
-            <!-- <option value="-1">Book</option>         -->
+        <!-- <select class="form-control"  (change)="onChangeEvent(form)"  name="Book" ngModel #Book="ngModel" [ngModel]="0">              
             <option *ngFor="let book of books; let i = index" value={{i}}>
               {{book}}
             </option>
-          </select>
+          </select> -->
 
+          <select class="form-control" id="Book"  (change)="onDropDownChange(form,$event)"  name="Book" ngModel #Book="ngModel" [ngModel]="0">  
+            <!-- <option value="----Old Testament - పాత నిబంధన----" disabled="">----Old Testament - పాత నిబంధన----</option> -->
+            <option selected="selected" value="0">Genesis - ఆదికాండము</option>
+            <option value="1">Exodus - నిర్గమకాండము</option>
+            <option value="2">Leviticus - లేవీయకాండము</option>
+            <option value="3">Numbers - సంఖ్యాకాండము</option>
+            <option value="4">Deuteronomy - ద్వితీయోపదేశకాండము</option>
+            <option value="5">Joshua - యెహోషువ</option>
+            <option value="6">Judges - న్యాయాధిపతులు</option>
+            <option value="7">Ruth - రూతు</option>
+            <option value="8">Samuel I- 1 సమూయేలు</option>
+            <option value="9">Samuel II - 2 సమూయేలు</option>
+            <option value="10">Kings I - 1 రాజులు</option>
+            <option value="11">Kings II - 2 రాజులు</option>
+            <option value="12">Chronicles I - 1 దినవృత్తాంతములు</option>
+            <option value="13">Chronicles II - 2 దినవృత్తాంతములు</option>
+            <option value="14">Ezra - ఎజ్రా</option>
+            <option value="15">Nehemiah - నెహెమ్యా</option>
+            <option value="16">Esther - ఎస్తేరు</option>
+            <option value="17">Job - యోబు</option>
+            <option value="18">Psalms - కీర్తనల గ్రంథము</option>
+            <option value="19">Proverbs - సామెతలు</option>
+            <option value="20">Ecclesiastes - ప్రసంగి</option>
+            <option value="21">Song of Solomon - పరమగీతము</option>
+            <option value="22">Isaiah - యెషయా</option>
+            <option value="23">Jeremiah - యిర్మియా</option>
+            <option value="24">Lamentations - విలాపవాక్యములు</option>
+            <option value="25">Ezekiel - యెహెఙ్కేలు</option>
+            <option value="26">Daniel - దానియేలు</option>
+            <option value="27">Hosea - హోషేయ</option>
+            <option value="28">Joel - యోవేలు</option>
+            <option value="29">Amos - ఆమోసు</option>
+            <option value="30">Obadiah - ఓబద్యా</option>
+            <option value="31">Jonah - యోనా</option>
+            <option value="32">Micah - మీకా</option>
+            <option value="33">Nahum - నహూము</option>
+            <option value="34">Habakkuk - హబక్కూకు</option>
+            <option value="35">Zephaniah - జెఫన్యా</option>
+            <option value="36">Haggai - హగ్గయి</option>
+            <option value="37">Zechariah - జెకర్యా</option>
+            <option value="38">Malachi - మలాకీ</option>
+            <!-- <option value="----New Testament- క్రొత్త నిబంధన----" disabled="">----New Testament- క్రొత్త నిబంధన----</option> -->
+            <option value="39">Matthew - మత్తయి సువార్త</option>
+            <option value="40">Mark - మార్కు సువార్త</option>
+            <option value="41">Luke - లూకా సువార్త</option>
+            <option value="42">John - యోహాను సువార్త</option>
+            <option value="43">Acts - అపొ. కార్యములు</option>
+            <option value="44">Romans - రోమీయులకు</option>
+            <option value="45">Corinthians I - 1 కొరింథీయులకు</option>
+            <option value="46">Corinthians II - 2 కొరింథీయులకు</option>
+            <option value="47">Galatians - గలతీయులకు</option>
+            <option value="48">Ephesians - ఎఫెసీయులకు</option>
+            <option value="49">Philippians - ఫిలిప్పీయులకు</option>
+            <option value="50">Colossians - కొలస్సయులకు</option>
+            <option value="51">Thessalonians I - 1 థెస్సలొనీకయులకు</option>
+            <option value="52">Thessalonians II - 2 థెస్సలొనీకయులకు</option>
+            <option value="53">Timothy I - 1 తిమోతికి</option>
+            <option value="54">Timothy II - 2 తిమోతికి</option>
+            <option value="55">Titus - తీతుకు</option>
+            <option value="56">Philemon - ఫిలేమోనుకు</option>
+            <option value="57">Hebrews - హెబ్రీయులకు</option>
+            <option value="58">James - యాకోబు</option>
+            <option value="59">Peter I - 1 పేతురు</option>
+            <option value="60">Peter II - 2 పేతురు</option>
+            <option value="61">John I - 1 యోహాను</option>
+            <option value="62">John II - 2 యోహాను</option>
+            <option value="63">John III - 3 యోహాను</option>
+            <option value="64">Judah - యూదా</option>
+            <option value="65">Revelation - ప్రకటన గ్రంథము</option>          
+          </select>
+          <!-- {{form.event.target.options[event.target.options.selectedIndex].text | json }} -->
           <!-- <datalist id="Book" name="Book" >
             <option *ngFor="let book of books; let i = index" value={{i}}>
                 {{book}}
@@ -17,7 +87,14 @@
           
       </div>
       <div class="col">
-        <input type="number" class="form-control" placeholder="Chapter" (change)="onChangeEvent(form)"  name="Chapter" min="1" max="66" [ngModel]="1" ngModel #Chapter="ngModel">
+        <!-- <input type="number" class="form-control" placeholder="Chapter" (change)="onChangeEvent(form)"  name="Chapter" min="1" max="66" [ngModel]="1" ngModel #Chapter="ngModel"> -->
+
+        <select class="form-control"  (change)="onChangeEvent(form)"  name="Chapter" ngModel #Chapter="ngModel" [ngModel]="0">              
+            <option *ngFor="let chapters of bibleChapters.Chapter; let i = index" value={{i}}>
+              {{i+1}}
+            </option>
+          </select>
+
       </div>
       <!-- <div class="col">
         <input type="number" class="form-control" placeholder="Verses"  (change)="onChangeEvent(form)"  name="Verses" min="1" max="200" [ngModel]="1" ngModel #Verses="ngModel">
@@ -31,12 +108,14 @@
 
   <div class="row">
     <div class="col-12">
-      <button class="btn btn-outline-primary btn-block" (click)="onPlayer()" ><i class="fa fa-play"></i> {{playerStatus}} {{books[book-1]}} : {{chapter}}</button>
+      <button class="btn btn-outline-primary btn-block" (click)="onPlayer()" ><i class="fa fa-play"></i> {{playerStatus}} {{selectedBook}} : {{selectedChapter}} </button>
     </div>
   </div>  
 
 <br>
-
+<!-- <div class="">
+  {{ Book | json }}
+</div> -->
 <div class="" *ngIf="resData">  
   <!-- <ol class="list-group list-group-flush">
     <li *ngFor="let verse of resData.Verse;let i = index"  class="list-group-item">
@@ -53,7 +132,7 @@
     popover="I will hide on blur"
     triggers="mouseenter:mouseleave"
     >
-      <i class="fa fa-book"></i> {{books[book-1]}} : {{chapter}} 
+      <i class="fa fa-book"></i> {{selectedBook}} : {{selectedChapter}} 
     </button>
     <button type="button" class="list-group-item list-group-item-action" (click)="onVerse(form,i)" *ngFor="let verse of resData.Verse;let i = index">
        <b>{{i+1}} : </b>{{verse.Verse}}      
