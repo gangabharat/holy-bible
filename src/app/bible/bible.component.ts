@@ -15,7 +15,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './bible.component.html',
   styleUrls: ['./bible.component.css']
 })
-export class BibleComponent implements OnInit {
+export class BibleComponent implements OnInit , OnDestroy {
 
   faBookOpen = faCoffee;
   @ViewChild('form') form : NgForm;
@@ -23,7 +23,7 @@ export class BibleComponent implements OnInit {
   data : Bible;
   resData : any;
   //resData : Book;
-  bibleChapters : number;
+  bibleChapters : Book;
   book : number = 0;
   chapter : number = 0;
   verses : number = 0;
@@ -34,6 +34,8 @@ export class BibleComponent implements OnInit {
 
   fileToPlay:string;
 
+  selectedBook : string = "Genesis - ఆదికాండము";
+  selectedChapter : number = 1;
   
   newListModalRef: BsModalRef;
   listOptionsModalRef: BsModalRef;
@@ -55,11 +57,25 @@ export class BibleComponent implements OnInit {
     this.audioService.playerStatus.subscribe(res=>{
       //console.log(res);
       this.playerStatus = res;
+
+      if(res==="ended")
+      {
+        console.log("ended");
+        this.playNext();
+      }
     })
     this.bibleService.getBible().subscribe(
       (res : Bible) =>{
       this.data=res;
-      this.onChangeEvent(this.form);           
+
+      this.bibleChapters = this.data.Book[this.book];
+      console.log(this.bibleChapters);
+      this.resData =this.data.Book[this.book]?.Chapter[this.chapter];
+      //console.log(event.target[this.form.value.Book].innerHTML);
+      this.loadBible(this.book,this.chapter);
+
+      //this.onChangeEvent(this.form);  
+      //this.loadBible(+this.form.value.Book,+this.form.value.Chapter);     
       
       //this.resData =this.data.Book[this.book]?.Chapter[this.chapter];
       //this.onChangeEvent({Form.Book:});
@@ -109,33 +125,58 @@ export class BibleComponent implements OnInit {
   {    
     this.onChangeEvent(form);
   }
-
+  onDropDownChange(form : NgForm, event : any)
+  {
+    //this.bibleChapters = this.data.Book[+form.value.Book];
+    //console.log(this.bibleChapters);
+    this.bibleChapters = this.data.Book[+form.value.Book];
+    //console.log(event.target[+form.value.Book].innerHTML);
+    this.selectedBook = event.target[+form.value.Book].innerHTML;
+    //form.path({})
+    //this.form.value.patchValue({ Chapter : 10});
+    this.selectedChapter =  1 ;
+    this.loadBible(+form.value.Book,0);
+  }
   onChangeEvent(form : NgForm)
   { 
-    //this.audio.play();
-    //console.log(form.value);
-    this.bibleStoreService.addPuppy(form.value)
-    this.book = + form.value.Book + 1;
-    this.chapter = form.value.Chapter;
-
-    this.audioService.setAudio(`http://sajeevavahini.com/audiobible/${this.book}/${this.chapter}.mp3`);    
-    //this.audioService.audio.toggleAttribute()
-    //console.log(this.audioService);
-    this.resData = this.data.Book[form.value.Book]?.Chapter[form.value.Chapter-1];    
-    //console.log(this.resData);
+    this.selectedChapter = +form.value.Chapter +1 ;
+    this.loadBible(+form.value.Book,+form.value.Chapter);   
   }
   onPlayer()
   {
-    this.audioService.toggleAudio();
-    //this.audioService.audio.toggleAttribute("toggles",true);
-    //console.log( this.audioService.audio.paused);
-    //this.audioService.pauseAudio();
-    //this.audioService.audio.paused
-    //console.log( this.audioService.playerStatus);
-    // if(this.audioService.playerStatus.isStopped)
-    // {
-    //   this.audioService.toggleAudio();
-    // }
+    this.audioService.toggleAudio();    
+  }
+
+  loadBible(book : number = 0 , chapter : number = 0)
+  {
+    console.log(book + ' - '+ chapter);    
+    this.audioService.setAudio(`http://sajeevavahini.com/audiobible/${book+1}/${chapter+1}.mp3`);  
+    this.resData = this.data.Book[book]?.Chapter[chapter];   
+  }
+
+  playPrevious()
+  {
+    if(+this.form.value.Chapter > 0 )
+    {
+      //console.log("");
+      this.selectedChapter--;
+      this.form.form.patchValue({ Chapter : this.selectedChapter - 1 });
+      this.loadBible(+this.form.value.Book,this.selectedChapter -1 );
+    }
+  }
+  playNext()
+  {
+    //working
+    if(this.bibleChapters.Chapter.length > (+this.form.value.Chapter + 1) )
+    {
+      //console.log("test");
+      this.selectedChapter++; // = +this.form.value.Chapter +1 ;
+      this.form.form.patchValue({ Chapter : this.selectedChapter - 1 });
+      this.loadBible(+this.form.value.Book,this.selectedChapter - 1 );
+    }
+    //this.form.form.patchValue({ Chapter : +this.form.value.Chapter + 1 });
+    console.log(this.bibleChapters.Chapter.length);
+    console.log(this.form.value.Chapter);
   }
 
   onVerse(form : NgForm,verse : number)
@@ -147,6 +188,11 @@ export class BibleComponent implements OnInit {
     this.newListModalRef = this.modalService.show(template);
     //this.newListModalRef.content.
     setTimeout(() => document.getElementById("title").focus(), 250);
+  }
+  ngOnDestroy()
+  {
+    //this.audioService.re
+    this
   }
 
 

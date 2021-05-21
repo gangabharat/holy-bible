@@ -18,6 +18,7 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule, ButtonsModule } from 'ngx-bootstrap';
+import { BibleComponent } from './bible/bible.component';
 
 
 
@@ -37,7 +38,7 @@ import { PopoverModule, ButtonsModule } from 'ngx-bootstrap';
     FormsModule,
     //ApiAuthorizationModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: BibleComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
