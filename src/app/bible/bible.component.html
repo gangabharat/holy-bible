@@ -107,8 +107,14 @@
   </form>
 
   <div class="row">
-    <div class="col-12">
+    <div class="col-md-1">
+      <button class="btn btn-outline-primary btn-block" (click)="playPrevious()" [disabled]="selectedChapter == 1"><i class="fa fa-fast-backward"></i></button>
+    </div>
+    <div class="col">
       <button class="btn btn-outline-primary btn-block" (click)="onPlayer()" ><i class="fa fa-play"></i> {{playerStatus}} {{selectedBook}} : {{selectedChapter}} </button>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-outline-primary btn-block" (click)="playNext()"  ><i class="fa fa-fast-forward"></i></button>
     </div>
   </div>  
 

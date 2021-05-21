@@ -15,7 +15,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './bible.component.html',
   styleUrls: ['./bible.component.css']
 })
-export class BibleComponent implements OnInit {
+export class BibleComponent implements OnInit , OnDestroy {
 
   faBookOpen = faCoffee;
   @ViewChild('form') form : NgForm;
@@ -57,6 +57,12 @@ export class BibleComponent implements OnInit {
     this.audioService.playerStatus.subscribe(res=>{
       //console.log(res);
       this.playerStatus = res;
+
+      if(res==="ended")
+      {
+        console.log("ended");
+        this.playNext();
+      }
     })
     this.bibleService.getBible().subscribe(
       (res : Bible) =>{
@@ -148,6 +154,31 @@ export class BibleComponent implements OnInit {
     this.resData = this.data.Book[book]?.Chapter[chapter];   
   }
 
+  playPrevious()
+  {
+    if(+this.form.value.Chapter > 0 )
+    {
+      //console.log("");
+      this.selectedChapter--;
+      this.form.form.patchValue({ Chapter : this.selectedChapter - 1 });
+      this.loadBible(+this.form.value.Book,this.selectedChapter -1 );
+    }
+  }
+  playNext()
+  {
+    //working
+    if(this.bibleChapters.Chapter.length > (+this.form.value.Chapter + 1) )
+    {
+      //console.log("test");
+      this.selectedChapter++; // = +this.form.value.Chapter +1 ;
+      this.form.form.patchValue({ Chapter : this.selectedChapter - 1 });
+      this.loadBible(+this.form.value.Book,this.selectedChapter - 1 );
+    }
+    //this.form.form.patchValue({ Chapter : +this.form.value.Chapter + 1 });
+    console.log(this.bibleChapters.Chapter.length);
+    console.log(this.form.value.Chapter);
+  }
+
   onVerse(form : NgForm,verse : number)
   {
     console.log(form.value, verse);
@@ -157,6 +188,11 @@ export class BibleComponent implements OnInit {
     this.newListModalRef = this.modalService.show(template);
     //this.newListModalRef.content.
     setTimeout(() => document.getElementById("title").focus(), 250);
+  }
+  ngOnDestroy()
+  {
+    //this.audioService.re
+    this
   }
 
 
